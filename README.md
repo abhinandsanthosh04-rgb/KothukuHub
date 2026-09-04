@@ -137,7 +137,7 @@ Not applicable – KothukuHub is a software-only project.
 
 # Video
 
-https://youtu.be/zLoaEFJ-2xI
+https://youtu.be/-538ULbsVVI
 
 *The video demonstrates the KothukuHub interface, navigation and major interactive features of the platform.*
 
