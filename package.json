@@ -1,0 +1,25 @@
+{
+  "name": "kothukuhub-2.0",
+  "version": "2.0.0",
+  "description": "Kerala's Premier Mosquito Network & Blood Dining Social Platform (കൊതുക് ഹബ്ബ് 2.0)",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "bundle": "node bundle-zip.js"
+  },
+  "keywords": [
+    "mosquito",
+    "kerala",
+    "malayalam",
+    "parody",
+    "kothuku",
+    "kothukuhub"
+  ],
+  "author": "20-Year Senior Mosquito Architect",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.19.2",
+    "cors": "^2.8.5",
+    "archiver": "^7.0.1"
+  }
+}

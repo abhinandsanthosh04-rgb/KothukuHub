@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KothukuHub 2.0 — കൊതുക് കേരളം</title>
+  <meta name="description"
+    content="KothukuHub 2.0 - Kerala's Premier Mosquito Network, Blood Bank, Matrimony, SwampFinder & Defense Hub (കൊതുക് ഹബ്ബ് 2.0)">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=Noto+Sans+Malayalam:wght@500;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+  <!-- Animated Flying Mosquito Canvas Overlay -->
+  <canvas id="mosquitoCanvas"></canvas>
+
+  <!-- ===================== LOGIN SCREEN ===================== -->
+  <div id="login-screen">
+    <div class="net-bg"></div>
+    <div class="login-box">
+      <span class="login-emoji">🦟</span>
+      <h1>KothukuHub 2.0</h1>
+      <p class="sub mal">സ്വാഗതം, കൊതുകേ — welcome back, comrade</p>
+
+      <div class="card" style="text-align: left; padding: 20px;">
+        <div class="field">
+          <label>Kothuku ID (species-verified)</label>
+          <input type="text" id="loginId" value="Culex Sasi v2.0" placeholder="e.g. Anopheles Sudhakaran">
+        </div>
+
+        <div class="field">
+          <label>Wing-print passcode</label>
+          <input type="password" id="loginPass" value="buzz1234" placeholder="••••••••">
+        </div>
+
+        <!-- Beak / Proboscis Biometric Scanner -->
+        <div class="proboscis-box" id="proboscisWidget" onclick="scanBeakBiometrics()">
+          <div class="beak-icon" id="beakIcon">🦟</div>
+          <div class="beak-text">
+            <strong id="beakStatus">Proboscis Biometric Scan</strong>
+            <span id="beakSub">Touch here to verify beak & species</span>
+          </div>
+        </div>
+
+        <button class="btn gold" onclick="doLogin()">🦟 Buzz In</button>
+        <button class="btn ghost" style="margin-top: 10px;" onclick="doLogin('Guest Kothuku')">Enter as Guest
+          Kothuku</button>
+      </div>
+
+      <p class="login-note">
+        By entering you agree to the Swamp Code of Conduct: no biting fellow members, no snitching to lizards, and
+        always report coil deployments to the Complaint Portal.
+      </p>
+    </div>
+  </div>
+
+  <!-- ===================== APP SHELL ===================== -->
+  <div id="app">
+
+    <!-- Top Sticky Bar -->
+    <header class="topbar">
+      <div class="topbar-row">
+        <div class="brand">
+          <span class="brand-emoji">🦟</span>
+          <div class="brand-text">
+            <h1>KothukuHub</h1>
+            <span class="mal">കൊതുക് കേരളം · est. every monsoon</span>
+          </div>
+        </div>
+
+        <div class="topbar-actions">
+          <button class="action-pill-btn" id="soundBtn" title="Toggle mosquito buzz frequency">
+            🔊 <span class="btn-text-hide">Buzz: </span><span id="soundStatus">OFF</span>
+          </button>
+          <button class="action-pill-btn" id="downloadZipBtn" title="Download project source zip">
+            📦 <span class="btn-text-hide">Zip</span>
+          </button>
+          <button class="action-pill-btn" onclick="doLogout()">Logout</button>
+        </div>
+      </div>
+
+      <!-- Horizontal Scrolling Pill Navigation Tabs -->
+      <div class="tabs-wrap">
+        <div class="tabs" id="tabs"></div>
+      </div>
+    </header>
+
+    <!-- Kerala Live Ticker Banner -->
+    <div class="live-ticker">
+      <div class="ticker-inner">
+        <span class="ticker-tag">🔥 LIVE BUZZ</span>
+        <div class="ticker-text" id="liveTickerText">
+          Loading live Kerala mosquito swarm news & radar alerts...
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Content Container -->
+    <main class="wrap">
+
+      <!-- 1. DASHBOARD -->
+      <section class="section" id="tab-dashboard">
+        <div class="section-head">
+          <h2>Colony Dashboard</h2>
+          <p class="mal"> Today's swamp status</p>
+        </div>
+
+        <div class="stat-grid">
+          <div class="card stat-card">
+            <div class="stat-num" id="statMembers" data-count="1420690">1,420,690</div>
+            <div class="stat-label">Active kothukus statewide</div>
+          </div>
+          <div class="card stat-card">
+            <div class="stat-num" id="statBlood" data-count="1245">1,245 L</div>
+            <div class="stat-label">Blood drunk today (Liters)</div>
+          </div>
+          <div class="card stat-card">
+            <div class="stat-num" id="statBats" data-count="89420">89,420</div>
+            <div class="stat-label">Electric bats dodged today</div>
+          </div>
+          <div class="card stat-card">
+            <div class="stat-num" id="statSlaps" data-count="450120">450,120</div>
+            <div class="stat-label">Human slaps evaded (2 AM)</div>
+          </div>
+        </div>
+
+        <!-- Kerala Swarm Radar Banner -->
+        <div class="radar-banner">
+          <h3>🚨 Kerala State Threat Alert Level</h3>
+          <p class="radar-desc" id="threatAlertDesc">
+            Analyzing GoodKnight vapor and Electric Bat density across Kerala districts...
+          </p>
+          <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <button class="btn gold btn-sm" onclick="triggerRadarPulse()">⚡ Run Radar Sweep</button>
+            <button class="btn red btn-sm" onclick="switchTab('complaints')">📢 Report Human Threat</button>
+          </div>
+        </div>
+
+        <!-- Swamp Live Feed -->
+        <div class="card">
+          <h3 style="margin-top: 0; font-size: 0.95rem; margin-bottom: 12px;">Swamp Feed</h3>
+          <div class="feed-item">
+            <span class="feed-emoji">🩸</span>
+            <div>
+              <div class="feed-text"><b>Kunjootan</b> from Alappuzha logged a personal-best 4.2ml single sitting.</div>
+              <div class="feed-time">6 minutes ago</div>
+            </div>
+          </div>
+          <div class="feed-item">
+            <span class="feed-emoji">⚡</span>
+            <div>
+              <div class="feed-text">Electric bat sighting near Vyttila junction — <b>3 casualties</b> reported.</div>
+              <div class="feed-time">22 minutes ago</div>
+            </div>
+          </div>
+          <div class="feed-item">
+            <span class="feed-emoji">💍</span>
+            <div>
+              <div class="feed-text"><b>Remya</b> and <b>Vaidyanathan</b> matched on Mosquito Matrimony. Muhurtham fixed
+                for next drizzle.</div>
+              <div class="feed-time">1 hour ago</div>
+            </div>
+          </div>
+          <div class="feed-item">
+            <span class="feed-emoji">🥥</span>
+            <div>
+              <div class="feed-text">New 5-drop swamp listed in Thrissur: "Soman Uncle's Forgotten Coconut Shell."</div>
+              <div class="feed-time">3 hours ago</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2. BLOOD BANK -->
+      <section class="section hidden" id="tab-blood">
+        <div class="section-head">
+          <h2>Blood Bank</h2>
+          <p class="mal">രക്തബാങ്ക് — Kerala-wide, drop by drop</p>
+        </div>
+
+        <div class="bb-hero">
+          <div class="stat-num" id="heroBloodStock" data-count="2847">2,847</div>
+          <div class="stat-label"><span class="drop">🩸</span> total ml banked this monsoon</div>
+        </div>
+
+        <!-- Filter bar -->
+        <div class="filter-bar">
+          <label style="font-size: 0.8rem; opacity: 0.8; font-weight: 600; white-space: nowrap;">Filter
+            District:</label>
+          <select id="bloodDistrictFilter" onchange="filterBloodBank(this.value)">
+            <option value="all">All 14 Kerala Districts</option>
+            <option value="Kozhikode">Kozhikode (Halwa infused)</option>
+            <option value="Alappuzha">Alappuzha (Karimeen infused)</option>
+            <option value="Thrissur">Thrissur (Poorami adrenaline)</option>
+            <option value="Ernakulam">Ernakulam (IT Espresso)</option>
+            <option value="Trivandrum">Trivandrum (Secretariat Royal)</option>
+            <option value="Kottayam">Kottayam (Rubber Latex Thick)</option>
+            <option value="Malappuram">Malappuram (Sulaimani tea)</option>
+            <option value="Wayanad">Wayanad (Wild Pepper Spice)</option>
+          </select>
+        </div>
+
+        <div class="card" style="margin-bottom: 14px;">
+          <h3 style="margin-top: 0; font-size: 0.95rem; margin-bottom: 8px;">Blood group availability by district</h3>
+          <table class="bg-table" id="bloodTable"></table>
+        </div>
+
+        <div class="card">
+          <h3 style="margin-top: 0; font-size: 0.95rem; margin-bottom: 6px;">Donation etiquette</h3>
+          <p style="font-size: 0.83rem; opacity: 0.8; line-height: 1.5; margin: 0;">
+            One sitting, one host. Do not queue-jump on a sleeping uncle already claimed by a colony-mate. Ankles and
+            elbows are community land — first come, first served.
+          </p>
+        </div>
+      </section>
+
+      <!-- 3. MATRIMONY -->
+      <section class="section hidden" id="tab-matrimony">
+        <div class="section-head">
+          <h2>Mosquito Matrimony & BuzzMatch</h2>
+          <p class="mal">കൊതുകു വിവാഹം — find your buzzmate & perfect bite! 🦟❤️</p>
+        </div>
+
+        <!-- Matrimony Category Filter -->
+        <div class="filter-bar" style="margin-bottom: 16px; flex-wrap: wrap;">
+          <button class="tab-btn active" id="matFilterAll" onclick="filterMatrimony('all')">All Matches (8)</button>
+          <button class="tab-btn" id="matFilterMale" onclick="filterMatrimony('male')">🦟 Kothuku Males</button>
+          <button class="tab-btn" id="matFilterFemale" onclick="filterMatrimony('female')">🦟💖 Kothuku Females</button>
+        </div>
+
+        <div id="matrimonyList"></div>
+      </section>
+
+      <!-- 4. SWAMPFINDER -->
+      <section class="section hidden" id="tab-swamp">
+        <div class="section-head">
+          <h2>SwampFinder</h2>
+          <p class="mal">തങ്ങാൻ ഒരിടം — breeding stays across Kerala</p>
+        </div>
+        <div id="swampList"></div>
+      </section>
+
+      <!-- 5. COMPLAINTS & THREAT PORTAL -->
+      <section class="section hidden" id="tab-complaints">
+        <div class="section-head">
+          <h2>Human Complaint Portal</h2>
+          <p class="mal">മനുഷ്യർക്കെതിരെ പരാതി — file it, buzz brother</p>
+        </div>
+
+        <!-- Field Advisory -->
+        <div class="card" style="margin-bottom: 16px;">
+          <h3 style="margin-top: 0; font-size: 0.9rem; margin-bottom: 8px;">⚠️ Field Safety Advisory</h3>
+          <p style="font-size: 0.82rem; opacity: 0.85; line-height: 1.5; margin: 0 0 8px;">
+            Confirmed hostile human activity this week: coil deployment, plug-in vaporizers, and hand-held electric bats
+            near tube lights. Standard-issue defense gear:
+          </p>
+          <ul style="font-size: 0.82rem; opacity: 0.85; line-height: 1.6; margin: 0; padding-left: 18px;">
+            <li>🛡️ Wing shield before entering lit rooms</li>
+            <li>🧥 Insulated exoskeleton rubber jacket near electric bat zones</li>
+            <li>🌙 Night-vision compound eyes for coil-smoke conditions</li>
+            <li>👃 Citronella-resistant antennae wrap</li>
+          </ul>
+        </div>
+
+        <!-- File Complaint Form -->
+        <div class="card" style="margin-bottom: 16px;">
+          <h3 style="margin-top: 0; font-size: 0.9rem; margin-bottom: 10px;">File a new complaint</h3>
+          <div class="field">
+            <label>Threat Weapon</label>
+            <select id="complaintWeapon">
+              <option value="⚡ Electric Mosquito Bat (2000V Racket)">Electric Mosquito Bat (2000V Racket)</option>
+              <option value="🌀 Kothuku Thiri (Mosquito Coil)">Kothuku Thiri (Mosquito Coil)</option>
+              <option value="🔌 GoodKnight / All-Out Vaporizer">Plug-in Liquid Vaporizer overnight raid</option>
+              <option value="✋ The 2 AM Slap (Double Palm Smash)">The 2 AM Human Palm Slap</option>
+              <option value="🕸️ Mosquito Net (Unsporting)">Mosquito Net (Unsporting behavior)</option>
+              <option value="🧴 Chemical Repellent Cream">Chemical Repellent Ointment / Spray</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Incident Location / District</label>
+            <input type="text" id="complaintDistrict" placeholder="e.g. Ernakulam Kakkanad or Thrissur Town">
+          </div>
+          <div class="field">
+            <label>Incident Description & Threat Details</label>
+            <textarea id="complaintText" placeholder="Describe the incident, comrade..."></textarea>
+          </div>
+          <button class="btn red" onclick="submitThreatComplaint()">🚨 Submit Complaint to Swarm</button>
+        </div>
+
+        <!-- Live Threats Feed -->
+        <div id="complaintList"></div>
+      </section>
+
+      <!-- 6. BUZZNEWS -->
+      <section class="section hidden" id="tab-news">
+        <div class="section-head">
+          <h2>BuzzNews</h2>
+          <p class="mal">കൊതുക് വാർത്തകൾ — hot off the swamp</p>
+        </div>
+        <div id="newsList"></div>
+      </section>
+
+      <!-- 7. OBITUARIES (AADHRAANJALIKAL 🕊️) -->
+      <section class="section hidden" id="tab-obituaries">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+          <div class="section-head" style="margin-bottom: 0;">
+            <h2>Aadhraanjalikal</h2>
+            <p class="mal">ആദരാഞ്ജലികൾ — fallen mosquito warriors 🕊️</p>
+          </div>
+          <button class="btn gold btn-sm" onclick="openObituaryModal()">🕯️ Add Homage</button>
+        </div>
+        <div id="obituaryList"></div>
+      </section>
+
+      <!-- 8. LEADERBOARD -->
+      <section class="section hidden" id="tab-leaderboard">
+        <div class="section-head">
+          <h2>Leaderboard</h2>
+          <p class="mal">ടോപ്പ് രക്തശേഖരണം — top blood collectors, by district</p>
+        </div>
+        <div class="card">
+          <div id="lbList"></div>
+        </div>
+      </section>
+
+      <p class="small-note">
+        KothukuHub 2.0 is a satirical fan project. No real mosquitoes were harmed, married, or denied blood in the
+        making of this site. 🦟🌴
+      </p>
+    </main>
+  </div>
+
+  <!-- ===================== MODAL 1: CHAT SIMULATOR ===================== -->
+  <div class="modal-overlay" id="chatModal">
+    <div class="chat-window">
+      <div class="chat-header">
+        <img id="chatAvatar" src="" alt="avatar">
+        <div>
+          <h4 id="chatName" style="color: var(--cream); font-family: 'Baloo 2', sans-serif; font-size: 1.05rem;">
+            Mosquito Chat</h4>
+          <span style="font-size: 0.72rem; color: var(--leaf-light); font-weight: 600;">Online • Malayalam Buzz active
+            🦟</span>
+        </div>
+        <button class="modal-close" style="margin-left: auto;" onclick="closeChatModal()">✕</button>
+      </div>
+      <div class="chat-body" id="chatBody"></div>
+      <div class="chat-footer">
+        <input type="text" id="chatInput" placeholder="Type Malayali mosquito message..."
+          onkeypress="handleChatEnter(event)">
+        <button class="btn gold btn-sm" style="width: auto; padding: 0 16px;" onclick="sendChatMessage()">Send</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== MODAL 2: ADD OBITUARY ===================== -->
+  <div class="modal-overlay" id="obituaryModal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>🕯️ Post Aadhraanjali</h3>
+        <button class="modal-close" onclick="closeObituaryModal()">✕</button>
+      </div>
+      <p style="font-size: 0.8rem; opacity: 0.75; margin-bottom: 14px;">
+        In loving memory of a fallen mosquito comrade.
+      </p>
+
+      <div class="field">
+        <label>Fallen Comrade Name</label>
+        <input type="text" id="obitName" placeholder="e.g. Sasi Culex or Pappu Anopheles">
+      </div>
+      <div class="field">
+        <label>Age & Location</label>
+        <input type="text" id="obitMeta" placeholder="e.g. 3 days old, Thrissur">
+      </div>
+      <div class="field">
+        <label>Cause of Death (Comedy COD)</label>
+        <input type="text" id="obitCOD" placeholder="e.g. Clapped by Mammootty fan at 2 AM during climax">
+      </div>
+      <div class="field">
+        <label>Words of Remembrance</label>
+        <input type="text" id="obitWords" placeholder="e.g. He died doing what he loved: buzzing in ears.">
+      </div>
+
+      <div style="display: flex; gap: 10px; margin-top: 18px;">
+        <button class="btn gold" onclick="submitObituaryForm()">Publish Obituary 🕊️</button>
+        <button class="btn ghost" onclick="closeObituaryModal()">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast"></div>
+
+  <script src="app.js"></script>
+</body>
+
+</html>
