@@ -106,26 +106,26 @@ For Software:
 
 # Screenshots (Add at least 3)
 
-<img width="1917" height="1109" alt="Screenshot 2026-09-04 072051" src="https://github.com/user-attachments/assets/9cd2faea-9012-48d8-9767-20ffa03c79d1" />
+<img width="1917" height="1109" alt="Screenshot 2026-09-04 072051" src="https://github.com/user-attachments/assets/6aba2d4e-01c3-4004-aa2a-d0f9ed03fac3" />
 
 *KothukuHub homepage showing the main interface and navigation to the different mosquito services.*
 
-<img width="1917" height="1109" alt="Screenshot 2026-09-04 072051" src="https://github.com/user-attachments/assets/3490d66a-0e22-4b30-b2c0-d9f2198d5e48" />
+<img width="1917" height="1077" alt="Screenshot 2026-09-04 072139" src="https://github.com/user-attachments/assets/70c2f8ba-e29c-4cce-b7eb-6a8bac6512d9" />
 
 *KothukuHub services section showing features such as Mosquito Matrimony, Blood Bank, SwampFinder and MosquitoJobs.*
 
-<img width="1917" height="1077" alt="Screenshot 2026-09-04 072203" src="https://github.com/user-attachments/assets/78ad1a84-6f45-4239-aea9-d8355dcecb91" />
+<img width="1917" height="1077" alt="Screenshot 2026-09-04 072203" src="https://github.com/user-attachments/assets/ca25521d-f106-4b96-81c6-58f6e40cf5d9" />
 
 *Interactive KothukuHub module demonstrating the frontend interface and JavaScript-based interactions.*
 
-<img width="1917" height="1077" alt="Screenshot 2026-09-04 072219" src="https://github.com/user-attachments/assets/3a968b30-6a9a-40d2-a7b4-043c74a29958" />
+<img width="1917" height="1077" alt="Screenshot 2026-09-04 072219" src="https://github.com/user-attachments/assets/654c2918-52ae-4e2c-b15f-ed7e6d74936c" />
 
-<img width="1917" height="1077" alt="Screenshot 2026-09-04 072245" src="https://github.com/user-attachments/assets/009ceef2-a9bc-4282-92d3-1a6e8d3266d3" />
+<img width="1917" height="1077" alt="Screenshot 2026-09-04 072245" src="https://github.com/user-attachments/assets/6032dfc7-78b8-4cbd-89f9-3764c3de845d" />
 
 
 # Diagrams
 
-<img width="1536" height="1024" alt="image" src="https://github.com/user-attachments/assets/59c2f641-466e-43fb-9a71-207e92b9b3bf" />
+<img width="1536" height="1024" alt="image" src="https://github.com/user-attachments/assets/d6ae4cf5-f3b3-44a5-9c17-67128d20a63c" />
 
 *Workflow showing how users navigate through the KothukuHub platform and interact with its different modules.*
 
